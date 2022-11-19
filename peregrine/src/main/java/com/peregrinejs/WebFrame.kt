@@ -34,7 +34,15 @@ class WebFrame(val context: Context, val configuration: Configuration) {
          */
         internal val baseUrl: Uri,
 
-        internal val remoteInterface: RemoteInterface? = null,
+        /**
+         * The functions exposed to the web view.
+         */
+        internal val functions: RemoteFunctions = emptyMap(),
+
+        /**
+         * The observables exposed to the web view.
+         */
+        internal val observables: RemoteObservables = emptyMap(),
 
         private val pathHandlers: Map<Path, WebViewAssetLoader.PathHandler> = emptyMap(),
     ) {

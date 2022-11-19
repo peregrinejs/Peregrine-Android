@@ -49,16 +49,12 @@ internal class RPCPathHandler(private val frame: WebFrame) : WebViewAssetLoader.
             didReceiveMessage = ::receiveWebMessage
         )
 
-        val remoteInterface = frame.configuration.remoteInterface
+        for ((observableName, observable) in frame.configuration.observables) {
+            require(observableName.endsWith('$')) { "Observable names must end with a dollar sign ($)" }
 
-        if (remoteInterface != null) {
-            for ((observableName, observable) in remoteInterface.observables) {
-                require(observableName.endsWith('$')) { "Observable names must end with a dollar sign ($)" }
-
-                observable
-                    .onEach { event -> handleEvent(observableName, event) }
-                    .launchIn(frame.scope)
-            }
+            observable
+                .onEach { event -> handleEvent(observableName, event) }
+                .launchIn(frame.scope)
         }
 
         return WebResourceResponses.OK(headers = defaultHeaders)
@@ -75,7 +71,7 @@ internal class RPCPathHandler(private val frame: WebFrame) : WebViewAssetLoader.
 
     private fun receiveWebMessage(message: String) {
         val request = Request.deserialize(Json.decodeFromString(message))
-        val function = frame.configuration.remoteInterface?.functions?.get(request.function)
+        val function = frame.configuration.functions[request.function]
 
         val call = Call(
             request,
