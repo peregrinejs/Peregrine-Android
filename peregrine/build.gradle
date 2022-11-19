@@ -6,6 +6,7 @@ plugins {
 }
 
 android {
+    namespace "com.peregrinejs"
     compileSdk 33
 
     defaultConfig {
