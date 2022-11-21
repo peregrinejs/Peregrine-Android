@@ -3,6 +3,37 @@ plugins {
     id 'com.android.application' version '7.3.1' apply false
     id 'com.android.library' version '7.3.1' apply false
     id 'org.jetbrains.kotlin.android' version '1.6.10' apply false
+    id 'io.github.gradle-nexus.publish-plugin' version '1.1.0'
+}
+
+def GROUP = "com.peregrinejs"
+def VERSION = System.getenv("GITHUB_REF_NAME")
+def SIGNING_KEY_ID = System.getenv("SIGNING_KEY_ID")
+def SIGNING_KEY = System.getenv("SIGNING_KEY")
+def SIGNING_PASSWORD = System.getenv("SIGNING_PASSWORD")
+def SONATYPE_USERNAME = System.getenv("SONATYPE_USERNAME")
+def SONATYPE_PASSWORD = System.getenv("SONATYPE_PASSWORD")
+
+ext["GROUP"] = GROUP
+ext["VERSION"] = VERSION
+ext["SIGNING_KEY_ID"] = SIGNING_KEY_ID
+ext["SIGNING_KEY"] = SIGNING_KEY
+ext["SIGNING_PASSWORD"] = SIGNING_PASSWORD
+ext["SONATYPE_USERNAME"] = SONATYPE_USERNAME
+ext["SONATYPE_PASSWORD"] = SONATYPE_PASSWORD
+
+group = GROUP
+version = VERSION
+
+nexusPublishing {
+    repositories {
+        sonatype {
+            nexusUrl = uri("https://s01.oss.sonatype.org/service/local/")
+            snapshotRepositoryUrl = uri("https://s01.oss.sonatype.org/content/repositories/snapshots/")
+            username = SONATYPE_USERNAME
+            password = SONATYPE_PASSWORD
+        }
+    }
 }
 
 task clean(type: Delete) {
