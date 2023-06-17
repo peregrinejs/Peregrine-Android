@@ -87,9 +87,9 @@ afterEvaluate {
                     }
 
                     scm {
-                        connection = "scm:git:https://github.com/peregrinejs/Android.git"
-                        developerConnection = "scm:git:ssh://git@github.com:peregrinejs/Android.git"
-                        url = "https://github.com/peregrinejs/Android"
+                        connection = "scm:git:https://github.com/peregrinejs/Peregrine-Android.git"
+                        developerConnection = "scm:git:ssh://git@github.com:peregrinejs/Peregrine-Android.git"
+                        url = "https://github.com/peregrinejs/Peregrine-Android"
                     }
                 }
             }
