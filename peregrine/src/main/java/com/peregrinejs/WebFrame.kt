@@ -68,6 +68,9 @@ class WebFrame(val context: Context, val configuration: Configuration) {
     internal val isDebuggable: Boolean
         get() = 0 != context.applicationInfo.flags and ApplicationInfo.FLAG_DEBUGGABLE
 
+    internal val isLoaded: Boolean
+        get() = webView.url != null
+
     internal lateinit var scope: LifecycleCoroutineScope
 
     internal var webView: WebView

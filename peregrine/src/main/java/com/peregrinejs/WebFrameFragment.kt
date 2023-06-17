@@ -48,7 +48,10 @@ class WebFrameFragment() : Fragment() {
     }
 
     override fun onStart() {
-        frame.loadBaseURL()
+        if (!frame.isLoaded) {
+            frame.loadBaseURL()
+        }
+
         super.onStart()
     }
 }
